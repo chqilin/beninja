@@ -1,6 +1,6 @@
 {
   "name": "beninja",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "a build tools for ninja.",
   "main": "index.js",
   "bin": "index.js",
@@ -17,11 +17,12 @@
   "author": "qilin.cheng@foxmail.com",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/chqilin/beninja.git"
   },
   "license": "ISC",
   "keywords": [
     "build",
+    "compile",
     "c/c++",
     "gcc",
     "clang",
