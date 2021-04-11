@@ -45,5 +45,14 @@ create this json file manually. the file content just like:
 }
 ```
 
+## Usage
+```
+// build.json -> build.ninja
+beninja build [file, default './build.json']
+
+// build targets by build.ninja
+beninja make
+```
+
 ## LICENSE
 ISC

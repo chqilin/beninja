@@ -1,26 +1,32 @@
 {
   "name": "beninja",
-  "version": "1.0.1",
+  "version": "1.0.10",
   "description": "a build tools for ninja.",
   "main": "index.js",
   "bin": "index.js",
-
   "files": [
-    "./src/",
-    "./index.js",
-    "./README.md"
+    "src",
+    "index.js",
+    "README.md"
   ],
-  
   "dependencies": {
     "commander": "^7.2.0",
+    "cross-spawn": "^7.0.3",
     "glob": "^7.1.6"
   },
-
   "author": "qilin.cheng@foxmail.com",
   "repository": {
     "type": "git",
     "url": ""
   },
   "license": "ISC",
-  "keywords": ["build", "c/c++", "gcc", "clang", "ninja", "gn", "gyp"]
+  "keywords": [
+    "build",
+    "c/c++",
+    "gcc",
+    "clang",
+    "ninja",
+    "gn",
+    "gyp"
+  ]
 }

@@ -89,7 +89,7 @@ exports.buildTargetAsync = async function (stream, target) {
 exports.buildAsync = async function (config) {
     const project = config.project;
 
-    const stream = fs.createWriteStream(`./.${project}.ninja`);
+    const stream = fs.createWriteStream(`./build.ninja`);
 
     stream.write(`ninja_required_version = 1.10\n`);
     stream.write(`\n`);
