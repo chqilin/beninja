@@ -1,10 +1,12 @@
 
 const program = require('commander');
 const path = require('path');
-const spawn = require('cross-spawn');
-const package = require('../package.json');
 
-const { buildAsync } = require('./build');
+const package = require('../package.json');
+const init = require('./init');
+const build = require('./build');
+const make = require('./make');
+const install = require('./install');
 
 program
     .version(package.version, '-v, --version', 'output current version.');
@@ -12,37 +14,29 @@ program
 program
     .command('init')
     .description('init a build.json')
-    .action(()=>{
-        console.log('coming soon...');
+    .action(() => {
+        init();
     });
 
 program
     .command('build [file]')
     .description('build from [file]')
     .action((file) => {
-        try {
-            const filePath = path.resolve(process.cwd(), file || './build.json');
-            console.log(`build ${filePath}`);
-            const config = require(filePath);
-            buildAsync(config);
-        }
-        catch (err) {
-            console.error(err.message);
-        }
+        build(file);
     });
 
 program
     .command('make')
     .description('make targets by *.ninja')
-    .action(()=>{
-        console.log(`ninja -f ./build.ninja`);
-        const ret = spawn.sync('ninja', ['-f', 'build.ninja'], {encoding: 'utf-8'});
-        if(ret.stderr) {
-            console.error(ret.stderr);
-        }
-        else {
-            console.log(ret.stdout);
-        }
+    .action(() => {
+        make();
+    });
+
+program
+    .command('install [directory]')
+    .description('install files to a directory.')
+    .action((dir) => {
+        install(dir);
     });
 
 program.parse(process.argv);

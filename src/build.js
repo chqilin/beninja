@@ -2,7 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const { globAsync } = require('./glob');
 
-exports.buildAsync = async function (config) {
+const buildProject = async function (config) {
     const project = config.project;
 
     const stream = fs.createWriteStream(`./build.ninja`);
@@ -39,7 +39,7 @@ exports.buildAsync = async function (config) {
     stream.close();
 };
 
-exports.buildTargetAsync = async function (stream, target) {
+const buildTargetAsync = async function (stream, target) {
     /**
          * name
          */
@@ -140,4 +140,16 @@ exports.buildTargetAsync = async function (stream, target) {
     }
 
     stream.write(`\n`);
+};
+
+module.exports = async function(file) {
+    try {
+        const filePath = path.resolve(process.cwd(), file || './build.json');
+        console.log(`build ${filePath}`);
+        const config = require(filePath);
+        await buildProject(config);
+    }
+    catch(err) {
+        console.error(err.message);
+    }
 };
