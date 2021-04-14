@@ -33,7 +33,7 @@ const buildProject = async function (config) {
     const targets = config.targets;
     for (let i = 0; i < targets.length; i++) {
         const target = targets[i];
-        await exports.buildTargetAsync(stream, target);
+        await buildTargetAsync(stream, target);
     }
 
     stream.close();
@@ -142,14 +142,6 @@ const buildTargetAsync = async function (stream, target) {
     stream.write(`\n`);
 };
 
-module.exports = async function(file) {
-    try {
-        const filePath = path.resolve(process.cwd(), file || './build.json');
-        console.log(`build ${filePath}`);
-        const config = require(filePath);
-        await buildProject(config);
-    }
-    catch(err) {
-        console.error(err.message);
-    }
+module.exports = async function (config) {
+    await buildProject(config);
 };
