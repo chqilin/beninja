@@ -10,6 +10,13 @@ program
     .version(package.version, '-v, --version', 'output current version.');
 
 program
+    .command('init')
+    .description('init a build.json')
+    .action(()=>{
+        console.log('coming soon...');
+    });
+
+program
     .command('build [file]')
     .description('build from [file]')
     .action((file) => {

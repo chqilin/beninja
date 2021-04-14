@@ -15,27 +15,28 @@ Beninja need a build config file (build.json default). So we must
 create this json file manually. the file content just like:
 ```
 {
-    "project": "project-name",
+    "project": "libarchaism",
     "version": "1.0.0",
     "out_dir": "./_out",
     
     "targets": [{
         "name": "libarchaism",
-        "type": "dynamic",
+        "type": "dynamic", // executable | static | dynamic
         "out_dir": "./_out",
 
         "cflags": [
-            "-std=c++11",
-            "-Wall"
+            "-g", "-std=c++11"
         ],
 
-        "include_dirs": [
+        "lflags": [],
+
+        "includes": [
             "./src"
         ],
 
         "libraries": [
             "-Ldir",
-            "-lz", "-lxml2"
+            "-llib"
         ],
 
         "sources": [
