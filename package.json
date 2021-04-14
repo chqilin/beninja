@@ -1,9 +1,9 @@
 {
   "name": "beninja",
-  "version": "1.0.17",
+  "version": "1.0.18",
   "description": "a build tools for ninja.",
-  "main": "index.js",
-  "bin": "index.js",
+  "main": "./src/index.js",
+  "bin": "./src/index.js",
   "files": [
     "src",
     "index.js",

@@ -1,8 +1,8 @@
 const path = require('path');
 const fs = require('fs');
-const { globAsync } = require('./glob');
+const { globAsync } = require('../utils/glob');
 
-const buildProject = async function (config) {
+const buildProject = async function (config, params) {
     const project = config.project;
 
     const stream = fs.createWriteStream(`./build.ninja`);
