@@ -1,6 +1,6 @@
 {
   "name": "beninja",
-  "version": "1.0.19",
+  "version": "1.0.26",
   "description": "a build tools for ninja.",
   "main": "./src/index.js",
   "bin": "./src/index.js",
@@ -12,6 +12,7 @@
   "dependencies": {
     "commander": "^7.2.0",
     "cross-spawn": "^7.0.3",
+    "fs-extra": "^9.1.0",
     "glob": "^7.1.6"
   },
   "author": "qilin.cheng@foxmail.com",

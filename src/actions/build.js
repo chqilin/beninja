@@ -1,5 +1,5 @@
 const path = require('path');
-const fs = require('fs');
+const fs = require('fs-extra');
 const { globAsync } = require('../utils/glob');
 const { getNinjaFilePath } = require('../utils/funcs');
 
@@ -7,6 +7,7 @@ const buildProject = async function (config, params) {
     const ninjaFilePath = getNinjaFilePath(config);
     console.log('Build to:', ninjaFilePath);
 
+    fs.ensureFileSync(ninjaFilePath);
     const stream = fs.createWriteStream(ninjaFilePath);
 
     stream.write(`ninja_required_version = 1.10\n`);

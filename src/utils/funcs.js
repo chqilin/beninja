@@ -1,6 +1,6 @@
 const path = require('path');
+const fs = require('fs');
 
 exports.getNinjaFilePath = function(config) {
-    const absolutePath = path.resolve(`${config.out_dir || './'}`, `${config.project}.ninja`);
-    return path.relative(process.cwd(), absolutePath);
+    return path.join(`${config.out_dir || './'}`, `${config.project || 'build'}.ninja`);
 }

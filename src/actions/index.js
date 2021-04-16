@@ -1,3 +1,4 @@
+const path = require('path');
 const { action } = require("commander");
 
 module.exports = function (name, conf) {
