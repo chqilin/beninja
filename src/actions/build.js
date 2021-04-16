@@ -1,17 +1,19 @@
 const path = require('path');
 const fs = require('fs');
 const { globAsync } = require('../utils/glob');
+const { getNinjaFilePath } = require('../utils/funcs');
 
 const buildProject = async function (config, params) {
-    const project = config.project;
+    const ninjaFilePath = getNinjaFilePath(config);
+    console.log('Build to:', ninjaFilePath);
 
-    const stream = fs.createWriteStream(`./build.ninja`);
+    const stream = fs.createWriteStream(ninjaFilePath);
 
     stream.write(`ninja_required_version = 1.10\n`);
     stream.write(`\n`);
 
     stream.write(`builddir = ${config.out_dir}\n`);
-    stream.write(`cflags = -Wall -std=c++20 -O3\n`);
+    stream.write(`cflags = -Wall -std=c++17 -O3\n`);
     stream.write(`lflags = \n`);
     stream.write(`includes = \n`);
     stream.write(`libraries = \n`);
