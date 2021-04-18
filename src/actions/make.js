@@ -1,8 +1,8 @@
 const spawn = require('cross-spawn');
-const { getNinjaFilePath } = require('../utils/funcs');
+const common = require('../utils/common');
 
 module.exports = async function (config, params) {
-    const ninjaFilePath = getNinjaFilePath(config);
+    const ninjaFilePath = common.getNinjaFilePath(config);
     console.log(`ninja -f ${ninjaFilePath}`);
 
     const ret = spawn.sync('ninja', ['-f', ninjaFilePath], { encoding: 'utf-8' });

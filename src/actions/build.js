@@ -1,10 +1,10 @@
 const path = require('path');
 const fs = require('fs-extra');
-const { globAsync } = require('../utils/glob');
-const { getNinjaFilePath } = require('../utils/funcs');
+const glob = require('../utils/glob');
+const common = require('../utils/common');
 
 const buildProject = async function (config, params) {
-    const ninjaFilePath = getNinjaFilePath(config);
+    const ninjaFilePath = common.getNinjaFilePath(config);
     console.log('Build to:', ninjaFilePath);
 
     fs.ensureFileSync(ninjaFilePath);
@@ -36,32 +36,20 @@ const buildProject = async function (config, params) {
     const targets = config.targets;
     for (let i = 0; i < targets.length; i++) {
         const target = targets[i];
-        await buildTargetAsync(stream, target);
+        await buildTargetAsync(stream, target, config.out_dir);
     }
 
     stream.close();
 };
 
-const buildTargetAsync = async function (stream, target) {
-    /**
-         * name
-         */
-    let name = target.name || 'a';
-    let type = target.type || 'executable';
+const buildTargetAsync = async function (stream, target, outdir) {
+    let targetName = target.name || 'a';
+    let targetType = target.type || 'executable';
 
-    let outFileExt = '';
-    if (type === 'static') {
-        outFileExt = '.a';
-    }
-    else if (type === 'dynamic') {
-        outFileExt = '.so';
-    }
-
-    let outFileName = `${name}${outFileExt}`;
-    let outFileDir = target.out_dir || projectDir;
-    const outFilePath = path.join(outFileDir, outFileName);
-    console.log('outFileName', outFileName);
-    console.log('outFileDir', outFilePath);
+    const targetDir = common.getTargetOutDir(outdir, targetName);
+    const targetFile = common.getTargetFileName(targetName, targetType);
+    const targetPath = path.join(targetDir, targetFile);
+    console.log('target:', targetPath);
 
     /**
      * cflags
@@ -106,7 +94,7 @@ const buildTargetAsync = async function (stream, target) {
     if (target.sources && target.sources.length > 0) {
         for (let i = 0; i < target.sources.length; i++) {
             const src = target.sources[i];
-            const files = await globAsync(src);
+            const files = await glob.getFilesAsync(src);
             files.forEach(f => {
                 sources.push(f);
             });
@@ -119,7 +107,7 @@ const buildTargetAsync = async function (stream, target) {
         let basename = path.basename(src);
         basename = basename.substring(0, basename.lastIndexOf('.'));
 
-        const outpath = `${path.join(outFileDir, basename)}.o`;
+        const outpath = `${path.join(targetDir, basename)}.o`;
         stream.write(`build ${outpath}: cc ${src}\n`);
         cflags && stream.write(`    cflags = ${cflags}\n`);
         includes && stream.write(`    includes = ${includes}\n`);
@@ -128,16 +116,16 @@ const buildTargetAsync = async function (stream, target) {
     });
     stream.write('\n');
 
-    if (type === 'static') {
-        stream.write(`build ${outFilePath}: ar ${outputs.join(' ')}\n`);
+    if (targetType === 'static') {
+        stream.write(`build ${targetPath}: ar ${outputs.join(' ')}\n`);
     }
-    else if (type === 'dynamic') {
-        stream.write(`build ${outFilePath}: so ${outputs.join(' ')}\n`);
+    else if (targetType === 'dynamic') {
+        stream.write(`build ${targetPath}: so ${outputs.join(' ')}\n`);
         lflags && stream.write(`    lflags = ${lflags}\n`);
         libraries && stream.write(`    libraries = ${libraries}\n`);
     }
-    else if (type === 'executable') {
-        stream.write(`build ${outFilePath}: ex ${outputs.join(' ')}\n`);
+    else if (targetType === 'executable') {
+        stream.write(`build ${targetPath}: ex ${outputs.join(' ')}\n`);
         lflags && stream.write(`    lflags = ${lflags}\n`);
         libraries && stream.write(`    libraries = ${libraries}\n`);
     }

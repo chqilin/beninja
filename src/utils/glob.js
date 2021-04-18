@@ -1,8 +1,8 @@
 const glob = require('glob');
 
-exports.glob = glob;
+exports.getFiles = glob;
 
-exports.globAsync = async function (pattern) {
+exports.getFilesAsync = async function (pattern) {
     return await new Promise((resolve, reject) => {
         glob(pattern, (err, files) => {
             if (err) {

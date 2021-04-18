@@ -29,4 +29,9 @@ program
     .action(actions('install', conf))
     .description('install targets.');
 
+program
+    .command('clean')
+    .action(actions('clean', conf))
+    .description('clean cached files.');
+
 program.parse(process.argv);
