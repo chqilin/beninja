@@ -1,6 +1,6 @@
 # beninja
 
-a small meta-build-tool for ninja.
+a small C/C++ meta-build-tool for ninja.
 
 ## Install
 * install ninja from https://ninja-build.org
@@ -15,32 +15,31 @@ Beninja need a build config file (build.json default). So we must
 create this json file manually. the file content just like:
 ```
 {
-    "project": "libarchaism",
-    "version": "1.0.0",
-    "out_dir": "./_out",
-    
-    "targets": [{
-        "name": "libarchaism",
-        "type": "dynamic", // executable | static | dynamic
-        "out_dir": "./_out",
+    "project": "eokas",
+    "version": "0.0.1",
+    "out_dir": "dist",
 
+    "targets": [{
+        "name": "eokas",
+        "type": "executable",
+    
         "cflags": [
-            "-g", "-std=c++11"
+            "-O3 -std=c++17"
         ],
 
         "lflags": [],
 
         "includes": [
-            "./src"
+            "-I./deps/"
         ],
 
         "libraries": [
-            "-Ldir",
-            "-llib"
+            "-L./deps",
+            "-larchaism"
         ],
 
         "sources": [
-            "./src/**.cpp"
+            "./src/*.cpp"
         ]
     }]
 }
@@ -53,7 +52,11 @@ beninja build [file, default './build.json']
 
 // build targets by build.ninja
 beninja make
+
+// clean build files
+beninja clean
 ```
 
 ## LICENSE
+
 ISC
