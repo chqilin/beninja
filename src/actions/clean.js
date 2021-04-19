@@ -1,5 +1,6 @@
 const path = require('path');
 const fs = require('fs-extra');
+const common = require('../utils/common');
 
 const isSafePathToDelete = async(config, params, candidatePath) => {
     const targets = config && config.targets;
@@ -32,9 +33,17 @@ const isSafePathToDelete = async(config, params, candidatePath) => {
 }
 
 module.exports = async function(config, params) {
-    const outDir = config.out_dir;
-    if(isSafePathToDelete(outDir)) {
-        fs.removeSync(outDir);
-        console.log('removed:', outDir);
+    console.log('clean ...');
+    
+    const project = await common.getProjectInfo(config);
+
+    if(isSafePathToDelete(config, params, project.buildDir)) {
+        fs.removeSync(project.buildDir);
+        console.log('removed:', project.buildDir);
+    }
+
+    if(isSafePathToDelete(config, params, project.installDir)) {
+        fs.removeSync(project.installDir);
+        console.log('removed:', project.installDir);
     }
 }

@@ -2,10 +2,10 @@ const spawn = require('cross-spawn');
 const common = require('../utils/common');
 
 module.exports = async function (config, params) {
-    const ninjaFilePath = common.getNinjaFilePath(config);
-    console.log(`ninja -f ${ninjaFilePath}`);
+    const project = await common.getProjectInfo(config);
+    console.log(`ninja -f ${project.ninja}`);
 
-    const ret = spawn.sync('ninja', ['-f', ninjaFilePath], { encoding: 'utf-8' });
+    const ret = spawn.sync('ninja', ['-f', project.ninja], { encoding: 'utf-8' });
     if (ret.stderr) {
         console.error(ret.stderr);
     }
