@@ -17,7 +17,8 @@ create this json file manually. the file content just like:
 {
     "project": "eokas",
     "version": "0.0.1",
-    "out_dir": "dist",
+    "buildDir": "./_build",
+    "installDir": "./_install",
 
     "targets": [{
         "name": "eokas",
@@ -38,6 +39,8 @@ create this json file manually. the file content just like:
             "-larchaism"
         ],
 
+        "headers": [],
+
         "sources": [
             "./src/*.cpp"
         ]
@@ -46,12 +49,21 @@ create this json file manually. the file content just like:
 ```
 
 ## Usage
+* use beninja with one command.
+```
+beninja start
+```
+
+* use beninja step by step.
 ```
 // build.json -> build.ninja
 beninja build [file, default './build.json']
 
 // build targets by build.ninja
 beninja make
+
+// install targets and headers.
+beninja install
 
 // clean build files
 beninja clean

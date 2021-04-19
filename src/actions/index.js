@@ -7,10 +7,12 @@ module.exports = function (name, conf) {
         }
 
         try {
+            console.log(`${name} ...`);
             const configPath = path.resolve(conf);
             const config = require(configPath);
             const action = require(`./${name}`);
             await action(config, params);
+            console.log(`done.`);
         }
         catch (err) {
             console.error(err.message);

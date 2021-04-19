@@ -15,6 +15,11 @@ program
     .description('init a build system.');
 
 program
+    .command('start')
+    .action(actions('start', conf))
+    .description('start build-make-install with one command.');
+
+program
     .command('build')
     .action(actions('build', conf))
     .description('build low level build rules and tasks.');

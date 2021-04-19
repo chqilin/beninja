@@ -33,8 +33,6 @@ const isSafePathToDelete = async(config, params, candidatePath) => {
 }
 
 module.exports = async function(config, params) {
-    console.log('clean ...');
-    
     const project = await common.getProjectInfo(config);
 
     if(isSafePathToDelete(config, params, project.buildDir)) {
