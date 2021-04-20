@@ -16,8 +16,8 @@ create this json file manually. the file content just like:
 {
     "project": "eokas",
     "version": "0.0.1",
-    "buildDir": "./_build",
-    "installDir": "./_install",
+    "buildDir": "_build",
+    "installDir": "_install",
 
     "targets": [{
         "name": "eokas",
