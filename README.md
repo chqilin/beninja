@@ -3,7 +3,6 @@
 a small C/C++ meta-build-tool for ninja.
 
 ## Install
-* install ninja from https://ninja-build.org
 * install nodejs from https://nodejs.org
 * execute command in system Terminal
 ```
