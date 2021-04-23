@@ -20,6 +20,12 @@ program
     .description('start build-make-install with one command.');
 
 program
+    .command('vars')
+    .action(actions('vars', conf))
+    .description('list all vars.');
+
+
+program
     .command('build')
     .action(actions('build', conf))
     .description('build low level build rules and tasks.');

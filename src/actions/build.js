@@ -17,6 +17,7 @@ const buildProject = async function (config, params) {
     stream.write(`lflags = \n`);
     stream.write(`includes = \n`);
     stream.write(`libraries = \n`);
+    stream.write(`runtimes = \n`);
     stream.write(`\n`);
 
     stream.write(`rule cc\n`);
@@ -26,10 +27,10 @@ const buildProject = async function (config, params) {
     stream.write(`    command = ar -r $out $in\n`);
 
     stream.write(`rule so\n`);
-    stream.write(`    command = clang++ -o $out $in -shared -fPIC $lflags $libraries\n`);
+    stream.write(`    command = clang++ -o $out $in -shared -fPIC $lflags $libraries $runtimes\n`);
 
     stream.write(`rule ex\n`);
-    stream.write(`    command = clang++ -o $out $in $lflags $libraries\n`);
+    stream.write(`    command = clang++ -o $out $in $lflags $libraries $runtimes\n`);
     stream.write(`\n`);
 
     const targets = config.targets;
@@ -50,12 +51,13 @@ const buildTarget = async function (project, target, stream) {
     const targetPath = path.join(targetDir, target.file);
 
     console.log('target:', targetPath);
-    console.log('cflags:', target.cflags);
-    console.log('lflags', target.lflags);
-    console.log('includes:', target.includes);
-    console.log('libraries:', target.libraries);
-    console.log('headers', target.headers);
-    console.log('sources:', target.sources);
+    target.cflags && console.log('cflags:', target.cflags);
+    target.lflags && console.log('lflags', target.lflags);
+    target.includes && console.log('includes:', target.includes);
+    target.libraries && console.log('libraries:', target.libraries);
+    target.runtimes && console.log('runtimes', target.runtimes);
+    target.headers && console.log('headers', target.headers);
+    target.sources && console.log('sources:', target.sources);
 
     const outputs = [];
     target.sources.forEach(src => {
@@ -79,11 +81,13 @@ const buildTarget = async function (project, target, stream) {
             stream.write(`build ${targetPath}: so ${outputs.join(' ')}\n`);
             target.lflags && stream.write(`    lflags = ${target.lflags}\n`);
             target.libraries && stream.write(`    libraries = ${target.libraries}\n`);
+            target.runtimes && stream.write(`    runtimes = ${target.runtimes}\n`);
             break;
         case 'executable':
             stream.write(`build ${targetPath}: ex ${outputs.join(' ')}\n`);
             target.lflags && stream.write(`    lflags = ${target.lflags}\n`);
             target.libraries && stream.write(`    libraries = ${target.libraries}\n`);
+            target.runtimes && stream.write(`    runtimes = ${target.runtimes}\n`);
             break;
         default:
             console.log('Unknown target type:', target.type);

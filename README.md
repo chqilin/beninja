@@ -19,23 +19,30 @@ create this json file manually. the file content just like:
     "buildDir": "_build",
     "installDir": "_install",
 
+    "vars": {
+        "depsDir": "./deps/",
+        "cflags": "-O3 -std=c++17"
+    },
+
     "targets": [{
         "name": "eokas",
         "type": "executable",
     
-        "cflags": [
-            "-O3 -std=c++17"
-        ],
+        "cflags": ["${cflags}"],
 
         "lflags": [],
 
         "includes": [
-            "-I./deps/"
+            "-I${depsDir}"
         ],
 
         "libraries": [
-            "-L./deps",
+            "-L${depsDir}",
             "-larchaism"
+        ],
+
+        "runtimes": [
+            "@executable_path"
         ],
 
         "headers": [],
@@ -55,8 +62,11 @@ beninja start
 
 * use beninja step by step.
 ```
+// list all vars
+beninja vars
+
 // build.json -> build.ninja
-beninja build [file, default './build.json']
+beninja build
 
 // build targets by build.ninja
 beninja make
