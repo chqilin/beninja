@@ -8,7 +8,7 @@ const getTargetExt = (type) => {
         'dynamic': '.so',
     }
     return exts[type] || '';
-}
+};
 
 const applyVars = (value, vars) => {
     if (!value || !vars || vars.length <= 0) {
@@ -20,7 +20,7 @@ const applyVars = (value, vars) => {
         value = value.replace(`$\{${k}\}`, v);
     }
     return value;
-}
+};
 
 exports.getProjectInfo = async (config) => {
     const vars = config.vars || {};
@@ -78,13 +78,13 @@ exports.getTargetInfo = async (config, index) => {
         info.runtimes = applyVars(info.runtimes, vars);
     }
 
-    info.headers = await glob.getFilesByPatternList(
-        conf.headers.map(h => applyVars(h, vars))
-    );
-
     info.sources = await glob.getFilesByPatternList(
-        conf.sources.map(s => applyVars(s, vars))
+        conf.sources && conf.sources.map(f => applyVars(f, vars)) || []
     );
 
+    info.copies = await glob.getFilesByPatternList(
+        conf.copies && conf.copies.map(f => applyVars(f, vars)) || []
+    );
+    
     return info;
 };
