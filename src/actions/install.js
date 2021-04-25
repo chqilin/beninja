@@ -25,7 +25,7 @@ const installTarget = async function (project, target) {
     const installDir = path.join(project.installDir, target.name);
     fs.ensureDirSync(installDir);
 
-    // copy target file.
+    // copy target.
     {
         const from = path.join(project.buildDir, target.name, target.file);
         const to = path.join(installDir, target.file);
@@ -33,12 +33,12 @@ const installTarget = async function (project, target) {
         console.log('copy file:', to);
     }
 
-    // copy header files
-    for (let i = 0; i < target.headers.length; i++) {
-        const header = target.headers[i];
+    // copy files
+    for (let i = 0; i < target.copies.length; i++) {
+        const file = target.copies[i];
 
-        const from = header;
-        const to = path.join(installDir, path.basename(header));
+        const from = file;
+        const to = path.join(installDir, path.basename(from));
         fs.copyFileSync(from, to);
         console.log('copy file:', to);
     }

@@ -45,10 +45,12 @@ create this json file manually. the file content just like:
             "@executable_path"
         ],
 
-        "headers": [],
-
         "sources": [
             "./src/*.cpp"
+        ],
+
+        "copies": [
+            "./src/*.h"
         ]
     }]
 }
