@@ -13,26 +13,26 @@ const delay = async(s)=>{
 module.exports = async function(config, params) {
     console.log('==> step 1:', 'vars ...');
     await vars(config, params);
-    await delay(1.0);
+    await delay(0.5);
     console.log(' ');
 
     console.log('==> step 2:', 'clean ...');
     await clean(config, params);
-    await delay(1.0);
+    await delay(0.5);
     console.log(' ');
 
     console.log('==> step 3:', 'build ...');
     await build(config, params);
-    await delay(1.0);
+    await delay(0.5);
     console.log(' ');
 
     console.log('==> step 4:', 'make ...');
     await make(config, params);
-    await delay(1.0);
+    await delay(0.5);
     console.log(' ');
 
     console.log('==> step 5:', 'install ...');
     await install(config, params);
-    await delay(1.0);
+    await delay(0.5);
     console.log(' ');
 }
