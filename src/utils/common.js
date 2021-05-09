@@ -63,6 +63,12 @@ exports.getTargetInfo = async (config, index) => {
         info.lflags = applyVars(info.lflags, vars);
     }
 
+    if (conf.defines && conf.defines.length > 0) {
+        info.defines = '-D' + conf.defines.join(' -D');
+        info.defines = info.defines.replace(/"/g, `\\"`);
+        info.defines = applyVars(info.defines, vars);
+    }
+
     if (conf.includes && conf.includes.length > 0) {
         info.includes = conf.includes.join(' ');
         info.includes = applyVars(info.includes, vars);
@@ -85,6 +91,6 @@ exports.getTargetInfo = async (config, index) => {
     info.copies = await glob.getFilesByPatternList(
         conf.copies && conf.copies.map(f => applyVars(f, vars)) || []
     );
-    
+
     return info;
 };

@@ -32,6 +32,12 @@ create this json file manually. the file content just like:
 
         "lflags": [],
 
+        "defines": [
+            "_WINDOW_WIDTH=800",
+            "_WINDOW_HEIGHT=600",
+            "_WINDOW_TITLE=\"my-demo\""
+        ],
+
         "includes": [
             "-I${depsDir}"
         ],

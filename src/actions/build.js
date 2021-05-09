@@ -15,13 +15,14 @@ const buildProject = async function (config, params) {
     stream.write(`builddir = ${project.buildDir}\n`);
     stream.write(`cflags = -Wall -std=c++17 -O3\n`);
     stream.write(`lflags = \n`);
+    stream.write(`defines = \n`);
     stream.write(`includes = \n`);
     stream.write(`libraries = \n`);
     stream.write(`runtimes = \n`);
     stream.write(`\n`);
 
     stream.write(`rule cc\n`);
-    stream.write(`    command = clang++ -o $out $in -c $cflags $includes\n`);
+    stream.write(`    command = clang++ -o $out $in -c $cflags $defines $includes\n`);
 
     stream.write(`rule ar\n`);
     stream.write(`    command = ar -r $out $in\n`);
@@ -52,11 +53,12 @@ const buildTarget = async function (project, target, stream) {
 
     console.log('target:', targetPath);
     target.cflags && console.log('cflags:', target.cflags);
-    target.lflags && console.log('lflags', target.lflags);
+    target.lflags && console.log('lflags:', target.lflags);
+    target.defines && console.log('defines:', target.defines);
     target.includes && console.log('includes:', target.includes);
     target.libraries && console.log('libraries:', target.libraries);
-    target.runtimes && console.log('runtimes', target.runtimes);
-    target.headers && console.log('headers', target.headers);
+    target.runtimes && console.log('runtimes:', target.runtimes);
+    target.headers && console.log('headers:', target.headers);
     target.sources && console.log('sources:', target.sources);
 
     const outputs = [];
@@ -67,6 +69,7 @@ const buildTarget = async function (project, target, stream) {
 
         stream.write(`build ${opath}: cc ${src}\n`);
         target.cflags && stream.write(`    cflags = ${target.cflags}\n`);
+        target.defines && stream.write(`    defines = ${target.defines}\n`);
         target.includes && stream.write(`    includes = ${target.includes}\n`);
 
         outputs.push(opath);
