@@ -22,7 +22,7 @@ const isSafePathToDelete = async(config, params, candidatePath) => {
         }
 
         for(let s = 0; s < sources.length; s++) {
-            const sourcePath = path.resolve(sources[i]);
+            const sourcePath = path.resolve(sources[s]);
             if(sourcePath.startsWith(absolutePath)) {
                 return false;
             }
