@@ -1,4 +1,4 @@
-const readline = require('../utils/readline');
+const readline = require('../libs/readline');
 
 module.exports = async function(config, params) {
     const stream = readline.create();
