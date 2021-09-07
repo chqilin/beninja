@@ -5,8 +5,15 @@ a small C/C++ meta-build-tool for ninja.
 ## Install
 * install nodejs from https://nodejs.org
 * execute command in system Terminal
-```
+```shell
 npm install -g beninja
+```
+
+* On Windows system, you need do the steps below:
+1. Install clang: https://github.com/llvm/llvm-project/releases/tag/llvmorg-12.0.1 .
+2. Open PowerShell and execute command below:
+```shell
+set-ExecutionPolicy -Scope CurrentUser RemoteSigned
 ```
 
 ## build.json

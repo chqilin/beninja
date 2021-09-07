@@ -1,6 +1,6 @@
 const path = require('path');
 const fs = require('fs-extra');
-const common = require('../utils/common');
+const common = require('../core/common');
 
 const isSafePathToDelete = async(config, params, candidatePath) => {
     const targets = config && config.targets;
