@@ -1,6 +1,6 @@
 const path = require('path');
 const fs = require('fs-extra');
-const common = require('../utils/common');
+const common = require('../core/common');
 
 const buildProject = async function (config, params) {
     const project = await common.getProjectInfo(config);

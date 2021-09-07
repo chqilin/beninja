@@ -1,6 +1,6 @@
 const path = require('path');
 const fs = require('fs');
-const glob = require('./glob');
+const glob = require('../libs/glob');
 
 const getTargetExt = (type) => {
     const exts = {

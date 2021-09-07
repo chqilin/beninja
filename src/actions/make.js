@@ -1,4 +1,4 @@
-const common = require('../utils/common');
+const common = require('../core/common');
 const ninja = require('../../ninja');
 
 module.exports = async function (config, params) {
